@@ -103,30 +103,20 @@
     <h2>Games played at april 2nd, 2020</h2>
     <table>
         <thead>
-            <tr>
-                <th>Date</th><th>Home Team</th><th>Home Team Goals</th><th>Away Team Goals</th><th>Away Team</th>
-            </tr>
+        <tr>
+            <th>Date</th><th>Home Team</th><th>Home Team Goals</th><th>Away Team Goals</th><th>Away Team</th>
+        </tr>
         </thead>
         <tbody>
-
+        <?php foreach($matches as $match):?>
             <tr>
-                <td>January 7th, 2020</td><td>Liverpool</td><td>7</td><td>2</td><td>Manchester United</td>
+                <td><?= $match['match-date']?></td>
+                <td><?= $match['home-team']?></td>
+                <td><?= $match['home-team-goals']?></td>
+                <td><?= $match['away-team-goals']?></td>
+                <td><?= $match['away-team']?></td>
             </tr>
-            <tr>
-                <td>January 7th, 2020</td><td>Liverpool</td><td>7</td><td>2</td><td>Manchester United</td>
-            </tr>
-            <tr>
-                <td>January 7th, 2020</td><td>Liverpool</td><td>7</td><td>2</td><td>Manchester United</td>
-            </tr>
-            <tr>
-                <td>January 7th, 2020</td><td>Liverpool</td><td>7</td><td>2</td><td>Manchester United</td>
-            </tr>
-            <tr>
-                <td>January 7th, 2020</td><td>Liverpool</td><td>7</td><td>2</td><td>Manchester United</td>
-            </tr>
-            <tr>
-                <td>January 7th, 2020</td><td>Liverpool</td><td>7</td><td>2</td><td>Manchester United</td>
-            </tr>
+        <?php endforeach; ?>
         </tbody>
     </table>
 </section>
