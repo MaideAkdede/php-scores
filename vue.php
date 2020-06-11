@@ -24,83 +24,29 @@
         </tr>
         </thead>
         <tbody>
+
+        <?php $i=1; ?>
+
+        <?php foreach($standings as $team => $teamStats):?>
         <tr>
-            <td>1</td>
-            <th scope="row">Liverpool</th>
-            <td>4</td>
-            <td>12</td>
-            <td>4</td>
-            <td>0</td>
-            <td>0</td>
-            <td>10</td>
-            <td>0</td>
-            <td>10</td>
+            <td><?= $i++; ?></td>
+            <th scope="row"><?= $team; ?></th>
+            <td><?= $teamStats['games']; ?></td>
+            <td><?= $teamStats['points']; ?></td>
+            <td><?= $teamStats['wins']; ?></td>
+            <td><?= $teamStats['losses']; ?></td>
+            <td><?= $teamStats['draws']; ?></td>
+            <td><?= $teamStats['GF']; ?></td>
+            <td><?= $teamStats['GA']; ?></td>
+            <td><?= $teamStats['GD']; ?></td>
         </tr>
-        <tr>
-            <td>2</td>
-            <th scope="row">Manchester City</th>
-            <td>4</td>
-            <td>10</td>
-            <td>3</td>
-            <td>0</td>
-            <td>1</td>
-            <td>12</td>
-            <td>4</td>
-            <td>8</td>
-        </tr>
-        <tr>
-            <td>3</td>
-            <th scope="row">Chelsea</th>
-            <td>4</td>
-            <td>8</td>
-            <td>2</td>
-            <td>0</td>
-            <td>2</td>
-            <td>9</td>
-            <td>5</td>
-            <td>4</td>
-        </tr>
-        <tr>
-            <td>4</td>
-            <th scope="row">Tottenham</th>
-            <td>4</td>
-            <td>7</td>
-            <td>2</td>
-            <td>1</td>
-            <td>1</td>
-            <td>7</td>
-            <td>7</td>
-            <td>0</td>
-        </tr>
-        <tr>
-            <td>5</td>
-            <th scope="row">Manchester United</th>
-            <td>4</td>
-            <td>2</td>
-            <td>1</td>
-            <td>2</td>
-            <td>1</td>
-            <td>2</td>
-            <td>6</td>
-            <td>-4</td>
-        </tr>
-        <tr>
-            <td>6</td>
-            <th scope="row">Arsenal</th>
-            <td>4</td>
-            <td>0</td>
-            <td>0</td>
-            <td>4</td>
-            <td>0</td>
-            <td>2</td>
-            <td>12</td>
-            <td>-10</td>
-        </tr>
+        <?php endforeach; ?>
+
         </tbody>
     </table>
 </section>
 <section>
-    <h2>Games played at april 2nd, 2020</h2>
+    <h2>Games played at <?= TODAY; ?></h2>
     <table>
         <thead>
         <tr>
@@ -110,7 +56,7 @@
         <tbody>
         <?php foreach($matches as $match):?>
             <tr>
-                <td><?= $match['match-date']?></td>
+                <td><?= (new DateTime($match['match-date']))->format('M jS, Y');?></td>
                 <td><?= $match['home-team']?></td>
                 <td><?= $match['home-team-goals']?></td>
                 <td><?= $match['away-team-goals']?></td>
@@ -122,18 +68,16 @@
 </section>
 <section>
     <h2>Encodage d’un nouveau match</h2>
-    <form action="" method="post">
+
+    <form action="manage.php" method="post">
         <label for="match-date">Date du match</label>
-        <input type="text" id="match-date" name="match-date">
+        <input type="text" id="match-date" name="match-date" placeholder="<?= NOW;?>" value="<?=(!isset($_POST['match-date'])) ? NOW : $_POST['match-date'];?>">
         <br>
         <label for="home-team">Équipe à domicile</label>
         <select name="home-team" id="home-team">
-            <option value="arsenal">Arsenal</option>
-            <option value="chelsea">Chelsea</option>
-            <option value="liverpool">Liverpool</option>
-            <option value="manchester%20city">Manchester City</option>
-            <option value="manchester%20united">Manchester United</option>
-            <option value="tottenham">Tottenham</option>
+            <?php foreach ($teams as $team):?>
+            <option value="<?= $team; ?>"><?= $team; ?></option>
+            <?php endforeach; ?>
         </select>
         <label for="home-team-unlisted">Équipe non listée&nbsp;?</label>
         <input type="text" name="home-team-unlisted" id="home-team-unlisted">
@@ -143,12 +87,9 @@
         <br>
         <label for="away-team">Équipe visiteuse</label>
         <select name="away-team" id="away-team">
-            <option value="arsenal">Arsenal</option>
-            <option value="chelsea">Chelsea</option>
-            <option value="liverpool">Liverpool</option>
-            <option value="manchester%20city">Manchester City</option>
-            <option value="manchester%20united">Manchester United</option>
-            <option value="tottenham">Tottenham</option>
+            <?php foreach ($teams as $team):?>
+                <option value="<?= $team; ?>"><?= $team; ?></option>
+            <?php endforeach; ?>
         </select>
         <label for="away-team-unlisted">Équipe non listée&nbsp;?</label>
         <input type="text" name="away-team-unlisted" id="away-team-unlisted">
@@ -156,6 +97,8 @@
         <label for="away-team-goals">Goals de l’équipe visiteuse</label>
         <input type="text" id="away-team-goals" name="away-team-goals">
         <br>
+        <input type="hidden" name="action" value="store">
+        <input type="hidden" name="resource" value="match">
         <input type="submit" value="Ajouter ce match">
     </form>
 </section>
